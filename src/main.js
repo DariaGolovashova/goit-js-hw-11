@@ -3,66 +3,63 @@ import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// import { renderImageCards } from './js/render-functions';
+ import { createGalleryCardTemple } from './js/render-functions';
  import { fetchPhotos } from "./js/pixabay-api";
 
-// import { fetchPhotos } from './js/pixabay-api';
-// import { renderImageCards, clearGallery, showNotification } from './js/render-functions';
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
-// import iziToast from 'izitoast';
-// import 'izitoast/dist/css/iziToast.min.css';
+const form = document.querySelector('.search-form');
+const input = document.querySelector('.search-input');
+const gallery = document.querySelector('.gallery');
+const load = document.querySelector('.load');
 
-// // Отримуємо посилання на елементи сторінки
-// const form = document.querySelector('.search-form');
-// const input = document.querySelector('.search-input');
-// const gallery = document.querySelector('.gallery');
-// const loader = document.querySelector('.load');
 
-// // Ініціалізація модального вікна для галереї
-// const lightbox = new SimpleLightbox('.gallery a');
+load.style.display = 'none';
 
-// // Додаємо обробник події на форму пошуку
-// form.addEventListener('submit', onSearch);
+function onSearch(event) {
+    event.preventDefault();
+    gallery.innerHTML = '';
+    load.style.display = 'block';
+     const query = input.value.trim(); 
+  
+    if (query === '') {
+        iziToast.warning({
+      title: 'Warning',
+      message: 'Please enter a search query!',
+    });
+    return;
+    }
 
-// function onSearch(event) {
-//     event.preventDefault(); // Запобігаємо перезавантаженню сторінки
-//     const query = input.value.trim(); // Отримуємо пошуковий запит
+    
+    fetchPhotos(query) 
+        .then(data => {
+             load.style.display = 'none';
+            if (data.hits.length === 0) {
+                iziToast.error({
+          title: 'Error',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+                });
+                form.reset();
+          return;
+            
+            }
 
-//     // Перевіряємо, чи поле не порожнє
-//     if (!query) {
-//         showNotification('Please enter a search query!', 'error');
-//         return;
-//     }
+            const markup = createGalleryCardTemple(data.hits);
+            gallery.insertAdjacentHTML('beforeend', markup);  
 
-//     clearGallery(); // Очищаємо попередні результати
-//     showLoader(); // Показуємо індикатор завантаження
+            const lightbox = new SimpleLightbox('.gallery-item', {
+               captions: true,
+               captionsData: 'alt',
+               captionDelay: 250,
+            });
+            lightbox.refresh(); 
+            form.reset();
+        })
+        .catch(() => { error => loader.style.display = 'none';
+      iziToast.error({
+        title: 'Error',
+        message: 'Failed to load images. Please try again later.',
+      });
+    });
+}
 
-//     fetchImages(query) // Виконуємо запит до API
-//         .then(data => {
-//             if (data.hits.length === 0) {
-//                 showNotification(
-//                     'Sorry, there are no images matching your search query. Please try again!',
-//                     'error'
-//                 );
-//                 return;
-//             }
-
-//             renderImageCards(data.hits); // Рендеримо отримані зображення
-//             lightbox.refresh(); // Оновлюємо модальне вікно
-//         })
-//         .catch(() => {
-//             showNotification('Something went wrong. Please try again later!', 'error');
-//         })
-//         .finally(() => {
-//             hideLoader(); // Ховаємо індикатор завантаження
-//         });
-// }
-
-// function showLoader() {
-//     loader.classList.add('visible'); // Додаємо клас для відображення індикатора
-// }
-
-// function hideLoader() {
-//     loader.classList.remove('visible'); // Видаляємо клас для приховування індикатора
-// }
+form.addEventListener('submit', onSearch);
