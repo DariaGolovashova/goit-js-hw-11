@@ -6,15 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla App Template</title>
     <script type="module" crossorigin src="/goit-js-hw-11/index.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-Bgfrje-I.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/vendor-DumFYO8Z.css">
     <link rel="stylesheet" crossorigin href="/goit-js-hw-11/assets/styles-DvPDDfy5.css">
   </head>
   <body>
-    <header class="header">
+    <!-- <header class="header">
   <div class="container">
     <nav class="nav">
       <a class="nav-logo" href="./index.html" aria-label="Site logo">
         <svg class="nav-logo-icon" width="100" height="30">
-          <use href="/goit-js-hw-11/assets/sprite-E8vg0sBb.svg#logo"></use>
+          <use href="img/sprite.svg#logo"></use>
         </svg>
       </a>
       <ul class="nav-list">
@@ -27,12 +29,28 @@
       </ul>
     </nav>
   </div>
-</header>
+</header> -->
 
 
     <main>
+      <section class="gallery-section">
+        <div class="container">
+          <form class="search-form js-search-form">
+            <input
+              class="search-input js-search-input"
+              type="text"
+              placeholder="Search images..."
+              autocomplete="off"
+              required
+            />
+            <button class="search-btn" type="submit">Search</button>
+          </form>
+          <ul class="gallery"></ul>
+          <div class="load">Loading images, please wait...</div>
+        </div>
+      </section>
       <!-- Loads the specified .html file -->
-      <section class="vite-promo">
+      <!-- <section class="vite-promo">
   <div class="container">
     <div class="vite-promo-thumb">
       <a
@@ -42,11 +60,11 @@
         rel="noopener noreferrer"
         aria-label="Link to Vite official website"
         title="Vite.js  build tool"
-      >
-        <!-- Path to images as from index.html file -->
-        <img
+      >-->
+<!-- Path to images as from index.html file -->
+<!-- <img
           class="pic"
-          src="/goit-js-hw-11/assets/vite-logo-9o_aqrTe.png"
+          src="img/vite-logo.png"
           alt="Vite logo"
           width="640"
           height="640"
@@ -66,9 +84,9 @@
       </a>
     </h1>
   </div>
-</section>
+</section> -->
 
-      <article class="badges">
+      <!-- <article class="badges">
   <div class="container">
     <ul class="badges-list">
       <li class="badges-item">
@@ -103,11 +121,11 @@
       </li>
     </ul>
   </div>
-</article>
+</article> -->
 
     </main>
 
-    <footer class="footer">
+    <!-- <footer class="footer">
   <div class="container">
     <p class="footer-desc">
       Made with ✨ by
@@ -121,7 +139,7 @@
       </a>
     </p>
   </div>
-</footer>
+</footer> -->
 
 
   </body>
