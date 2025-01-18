@@ -16,14 +16,16 @@ load.style.display = 'none';
 
 function onSearch(event) {
     event.preventDefault();
+    
     gallery.innerHTML = '';
     load.style.display = 'block';
-     const query = input.value.trim(); 
+    const query = input.value.trim();
   
     if (query === '') {
+        load.style.display = 'none';
         iziToast.warning({
       title: 'Warning',
-      message: 'Please enter a search query!',
+            message: 'Please enter a search query!',
     });
     return;
     }
@@ -54,7 +56,7 @@ function onSearch(event) {
             lightbox.refresh(); 
             form.reset();
         })
-        .catch(() => { error => loader.style.display = 'none';
+        .catch(() => { error => load.style.display = 'none';
       iziToast.error({
         title: 'Error',
         message: 'Failed to load images. Please try again later.',
